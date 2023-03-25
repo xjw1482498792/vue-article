@@ -11,6 +11,12 @@
             <b-form-group label="手机号">
               <b-form-input v-model="user.telephone" type="number" placeholder="输入手机号">
               </b-form-input>
+              <b-form-invalid-feedback :state="validation">
+        手机号必须位11位
+      </b-form-invalid-feedback>
+      <b-form-valid-feedback :state="validation">
+        手机号符合11位
+      </b-form-valid-feedback>
             </b-form-group>
             <b-form-group label="密码">
               <b-form-input v-model="user.password" type="password" placeholder="输入密码">
@@ -35,10 +41,17 @@ export default {
         telephone: '',
         password: '',
       },
+      validation: null,
     };
   },
   methods: {
     register() {
+      if (this.user.telephone.length !== 11) {
+        this.validation = false;
+        return;
+      }
+      this.validation = true;
+
       console.log('register');
     },
   },
