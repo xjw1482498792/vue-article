@@ -73,6 +73,20 @@ export default {
       return $dirty ? !$error : null;
     },
     register() {
+      // 验证数据
+      this.$v.user.$touch();
+      if (this.$v.user.$anyError) {
+        return;
+      }
+      // 请求
+      const api = 'http:\\localhost:1016/api/auth/register';
+      this.axios.post(api, { ...this.user }).then((res) => {
+        // 保存token
+        console.log(res.data);
+        // 跳转主页
+      }).catch((err) => {
+        console.log('err:', err.response.data.msg);
+      });
       console.log('register');
     },
   },
