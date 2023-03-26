@@ -5,21 +5,19 @@
         <b-card title="注册">
           <b-form>
             <b-form-group label="姓名">
-              <b-form-input v-model="user.name" type="text" placeholder="输入名称">
+              <b-form-input v-model="$v.user.name.$model" type="text" placeholder="输入名称">
               </b-form-input>
             </b-form-group>
             <b-form-group label="手机号">
-              <b-form-input v-model="user.telephone" type="number" placeholder="输入手机号">
+              <b-form-input v-model="$v.user.telephone.$model" type="number" placeholder="输入手机号">
               </b-form-input>
               <b-form-invalid-feedback :state="validation">
         手机号必须位11位
       </b-form-invalid-feedback>
-      <b-form-valid-feedback :state="validation">
-        手机号符合11位
-      </b-form-valid-feedback>
+
             </b-form-group>
             <b-form-group label="密码">
-              <b-form-input v-model="user.password" type="password" placeholder="输入密码">
+              <b-form-input v-model="$v.user.password.$model" type="password" placeholder="输入密码">
               </b-form-input>
             </b-form-group>
             <b-form-group>
@@ -33,6 +31,8 @@
 </template>
 
 <script>
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
@@ -43,6 +43,21 @@ export default {
       },
       validation: null,
     };
+  },
+  validations: {
+    user: {
+      name: {
+
+      },
+      telephone: {
+        required,
+        minLength: minLength(11),
+        maxLength: maxLength(11),
+      },
+      password: {
+
+      },
+    },
   },
   methods: {
     register() {
