@@ -38,6 +38,8 @@
 <script>
 import { required, minLength } from 'vuelidate/lib/validators';
 import customValidator from '@/helper/validator';
+import storageService from '@/service/storageService';
+import userService from '@/service/userService';
 
 export default {
   data() {
@@ -79,11 +81,11 @@ export default {
         return;
       }
       // 请求
-      const api = 'http://localhost:1016/api/auth/register';
-      this.axios.post(api, { ...this.user }).then((res) => {
+
+      userService.register(this.user).then((res) => {
         // 保存token
         console.log(res.data);
-        localStorage.setItem('token', res.data.data.token);
+        storageService.set(storageService.USER_TOKEN, res.data.data.token);
         // 跳转主页
         this.$router.replace({ name: 'Home' });
       }).catch((err) => {
