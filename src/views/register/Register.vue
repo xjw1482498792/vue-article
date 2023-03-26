@@ -79,13 +79,19 @@ export default {
         return;
       }
       // 请求
-      const api = 'http:\\localhost:1016/api/auth/register';
+      const api = 'http://localhost:1016/api/auth/register';
       this.axios.post(api, { ...this.user }).then((res) => {
         // 保存token
         console.log(res.data);
+        localStorage.setItem('token', res.data.data.token);
         // 跳转主页
+        this.$router.replace({ name: 'Home' });
       }).catch((err) => {
-        console.log('err:', err.response.data.msg);
+        this.$bvToast.toast(err.response.data.msg, {
+          title: '数据验证错误',
+          variant: 'danger',
+          solid: true,
+        });
       });
       console.log('register');
     },
