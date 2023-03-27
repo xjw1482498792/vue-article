@@ -2,7 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-container>
-        <b-navbar-brand herf="#">OceanLearn</b-navbar-brand>
+        <b-navbar-brand @click="$router.push({name:'Home'})">OceanLearn</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
