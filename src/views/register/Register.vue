@@ -84,10 +84,14 @@ export default {
 
       userService.register(this.user).then((res) => {
         // 保存token
-        console.log(res.data);
         storageService.set(storageService.USER_TOKEN, res.data.data.token);
-        // 跳转主页
-        this.$router.replace({ name: 'Home' });
+        userService.info().then((response) => {
+          // 保存用户信息
+          storageService.set(storageService.USER_INFO, JSON.stringify(response.data.data.user));
+
+          // 跳转主页
+          this.$router.replace({ name: 'Home' });
+        });
       }).catch((err) => {
         this.$bvToast.toast(err.response.data.msg, {
           title: '数据验证错误',
