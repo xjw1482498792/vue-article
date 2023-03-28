@@ -38,7 +38,6 @@
 <script>
 import { required, minLength } from 'vuelidate/lib/validators';
 import customValidator from '@/helper/validator';
-import userService from '@/service/userService';
 import { mapMutations } from 'vuex';
 
 export default {
@@ -82,14 +81,7 @@ export default {
         return;
       }
       // 请求
-
-      userService.register(this.user).then((res) => {
-        // 保存token
-        this.SET_TOKEN(res.data.data.token);
-        return userService.info();
-      }).then((response) => {
-        // 保存用户信息
-        this.SET_USERINFO(response.data.data.user);
+      this.$store.dispatch('userModule/register', this.user).then(() => {
         // 跳转主页
         this.$router.replace({ name: 'Home' });
       }).catch((err) => {
@@ -99,6 +91,7 @@ export default {
           solid: true,
         });
       });
+
       console.log('register');
     },
   },
