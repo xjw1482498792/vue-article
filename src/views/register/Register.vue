@@ -38,7 +38,7 @@
 <script>
 import { required, minLength } from 'vuelidate/lib/validators';
 import customValidator from '@/helper/validator';
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -68,7 +68,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('userModule', ['SET_TOKEN', 'SET_USERINFO']),
+    ...mapActions('userModule', { userRegister: 'register' }),
     validateState(name) {
       // 这里是es6 解构赋值
       const { $dirty, $error } = this.$v.user[name];
@@ -81,7 +81,7 @@ export default {
         return;
       }
       // 请求
-      this.$store.dispatch('userModule/register', this.user).then(() => {
+      this.userRegister(this.user).then(() => {
         // 跳转主页
         this.$router.replace({ name: 'Home' });
       }).catch((err) => {
